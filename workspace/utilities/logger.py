@@ -23,7 +23,9 @@ from os import environ
 
 logger = logging.getLogger("sc4052_test_logger")
 logger.setLevel(logging.DEBUG)
-logger.propagate = True  # This is needed for pytest caplog fixture (log output assertion)
+logger.propagate = (
+    True  # This is needed for pytest caplog fixture (log output assertion)
+)
 # this will autoflush every command
 
 handler = logging.StreamHandler(sys.stdout)
@@ -54,7 +56,11 @@ class ElapsedFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         if record.levelname in self.COLORS:
-            levelname_color = self.COLORS[record.levelname] + record.levelname + LoggingColor.RESET.value
+            levelname_color = (
+                self.COLORS[record.levelname]
+                + record.levelname
+                + LoggingColor.RESET.value
+            )
             record.levelname = levelname_color
 
         elapsed_seconds = record.created - self.start_time
