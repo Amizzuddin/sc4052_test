@@ -21,7 +21,7 @@ from datetime import timedelta
 from enum import Enum
 from os import environ
 
-logger = logging.getLogger(environ["PROJECT"])
+logger = logging.getLogger("sc4052_test_logger")
 logger.setLevel(logging.DEBUG)
 logger.propagate = True  # This is needed for pytest caplog fixture (log output assertion)
 # this will autoflush every command
