@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  sc4052_test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_USERNAME}/sc4052_test:latest
+    # Uncomment to expose a port:
+    # ports:
+    #   - "8080:8080"
+    # Uncomment to set environment variables:
+    # environment:
+    #   - ENV_VAR=value
+    # Uncomment to mount source for live-reload:
+    # volumes:
+    #   - .:/app
