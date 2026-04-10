@@ -1,0 +1,171 @@
+name: sc4052_test CI/CD Pipeline
+on:
+  push:
+    # Runs on every branch. To restrict, replace '**' with a list:
+    # branches: [main, develop, 'release/**']
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install python dependencies
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install typescript dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; elif [ -f package.json ]; then npm install; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install node dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; elif [ -f package.json ]; then npm install; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install go dependencies
+        run: |
+          if [ -f go.mod ]; then go mod download; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install java dependencies
+        run: |
+          if [ -f pom.xml ]; then mvn dependency:resolve; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install rust dependencies
+        run: |
+          if [ -f Cargo.toml ]; then cargo fetch; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install ruby dependencies
+        run: |
+          if [ -f Gemfile ]; then gem install bundler --user-install --no-document -q && export PATH="$(ruby -e 'puts Gem.user_dir + "/bin"'):$PATH" && bundle install; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  php:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install php dependencies
+        run: |
+          if [ -f composer.json ]; then composer install; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  kotlin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install kotlin dependencies
+        run: |
+          if [ -f build.gradle ]; then gradle dependencies; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  dotnet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install dotnet dependencies
+        run: |
+          if [ -f *.csproj ]; then dotnet restore; fi
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."
+
+  bash:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Lint (pre-commit)
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests (placeholder)
+        run: echo "No tests detected — add your test command here."
+      - name: Deploy (optional)
+        run: echo "No deployment configured — add your deploy command here."

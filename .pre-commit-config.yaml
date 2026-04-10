@@ -1,0 +1,72 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.1.1
+    hooks:
+      - id: flake8
+        args: ['--max-line-length=120']
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ['--profile=black']
+  - repo: local
+    hooks:
+      - id: npm-lint-ts
+        name: npm run lint (TypeScript)
+        entry: bash -c '[ -f package.json ] && npm run lint --if-present || echo "Skipping npm lint (no package.json)"'
+        language: system
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: npm-lint
+        name: npm run lint
+        entry: bash -c '[ -f package.json ] && npm run lint --if-present || echo "Skipping npm lint (no package.json)"'
+        language: system
+        pass_filenames: false
+  - repo: https://github.com/dnephin/pre-commit-golang
+    rev: v0.5.1
+    hooks:
+      - id: go-fmt
+      - id: go-vet
+      - id: go-lint
+  - repo: local
+    hooks:
+      - id: cargo-fmt
+        name: cargo fmt
+        entry: bash -c '[ -f Cargo.toml ] && cargo fmt -- || echo "Skipping cargo fmt (no Cargo.toml)"'
+        language: system
+        types: [rust]
+        pass_filenames: false
+      - id: cargo-clippy
+        name: cargo clippy
+        entry: bash -c '[ -f Cargo.toml ] && cargo clippy -- -D warnings || echo "Skipping cargo clippy (no Cargo.toml)"'
+        language: system
+        pass_filenames: false
+  - repo: https://github.com/rubocop/rubocop
+    rev: v1.68.0
+    hooks:
+      - id: rubocop
+        args: ['--autocorrect']
+  - repo: https://github.com/digitalpulp/pre-commit-php
+    rev: 1.4.0
+    hooks:
+      - id: php-lint
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+
+# To skip a hook for a specific commit: git commit -n
+# To update all hooks to latest versions: pre-commit autoupdate
