@@ -26,6 +26,8 @@ jobs:
     - name: Docker build
       run: |
         REPO_NAME="${{ github.event.repository.name }}"
+        DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+        DOCKER_TOKEN="${{ secrets.DOCKER_TOKEN }}"
         docker build -t "$DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}" .
     - name: Docker login & push
       env:

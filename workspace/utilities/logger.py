@@ -1,6 +1,4 @@
 import logging
 
-# Remove unused import
-# import os
-
-# Your logging code here...
+# Remove the unused import
+# logger = logging.getLogger(__name__)
