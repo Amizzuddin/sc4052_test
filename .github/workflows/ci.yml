@@ -42,5 +42,7 @@ jobs:
         REPO_NAME="${{ github.event.repository.name }}"
         docker tag $REPO_NAME:latest $DOCKER_USERNAME/$REPO_NAME:latest
         docker push $DOCKER_USERNAME/$REPO_NAME:latest
+        docker tag $DOCKER_USERNAME/$REPO_NAME:latest $DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}
+        docker push $DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}
     - name: Deploy (optional)
       run: "echo \"No deployment configured — add your deploy command here.\""
