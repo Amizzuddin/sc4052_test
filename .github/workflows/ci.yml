@@ -31,9 +31,14 @@ jobs:
       env:
         DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: "if [ -z \"$DOCKER_TOKEN\" ]; then\n  echo \"DOCKER_TOKEN not set \u2014 skipping Docker push\"\n  exit 0\nfi\n\
-        REPO_NAME=\"${{ github.event.repository.name }}\"\necho \"$DOCKER_TOKEN\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin\n\
-        docker build -t \"$DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}\" .\ndocker push \"$DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}\"\
-        \n"
+      run: |
+        if [ -z "$DOCKER_TOKEN" ]; then
+          echo "DOCKER_TOKEN not set — skipping Docker push"
+          exit 0
+        fi
+        REPO_NAME="${{ github.event.repository.name }}"
+        echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker build -t "$DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}" .
+        docker push "$DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}"
     - name: Deploy (optional)
-      run: "echo \"No deployment configured \u2014 add your deploy command here.\""
+      run: "echo \"No deployment configured — add your deploy command here.\""
