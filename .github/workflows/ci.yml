@@ -1,0 +1,39 @@
+name: sc4052_test Pipeline
+on:
+  push:
+    branches:
+    - '**'
+  pull_request:
+    branches:
+    - '**'
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint (pre-commit)
+      uses: pre-commit/action@v3.0.1
+    - name: Run tests
+      run: |
+        pip install pytest --quiet
+        python -m pytest --tb=short -q
+      env:
+        PYTHONPATH: .
+    - name: Docker build
+      run: |
+        REPO_NAME="${{ github.event.repository.name }}"
+        docker build -t "$REPO_NAME:latest" .
+    - name: Docker login & push
+      env:
+        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      run: "if [ -z \"$DOCKER_TOKEN\" ]; then\n  echo \"DOCKER_TOKEN not set \u2014 skipping Docker push\"\n  exit 0\nfi\n\
+        REPO_NAME=\"${{ github.event.repository.name }}\"\necho \"$DOCKER_TOKEN\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin\n\
+        docker build -t \"$DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}\" .\ndocker push \"$DOCKER_USERNAME/$REPO_NAME:${{ github.sha }}\"\
+        \n"
+    - name: Deploy (optional)
+      run: "echo \"No deployment configured \u2014 add your deploy command here.\""
