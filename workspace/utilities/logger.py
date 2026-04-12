@@ -1,4 +1,11 @@
+# logger.py
+# Add logging functionality to the application
 import logging
 
-# Remove the unused import
-# logger = logging.getLogger(__name__)
+# Create a logger
+logger = logging.getLogger(__name__)
+
+
+class Logger:
+    def __init__(self):
+        pass
